@@ -54,13 +54,12 @@ Criação de métricas de desempenho e amostragem global da base de dados:
 Carros totais na frota: 384
 Carros analisados (em aceleração): 299
 Carros com anomalia detectada: 30
-============================================
 
---- ESTIMATIVA DE ECONOMIA MENSAL  ---
---------------------------------------------------
+ESTIMATIVA DE ECONOMIA MENSAL  
+
 Premissa: 22 dias úteis, 8h/dia, 30.0% em aceleração.
-Economia Mensal Estimada para a Frota: R$ 30196.16
-Economia Anual Projetada: R$ 362353.97
+Economia Mensal Estimada para a Frota: **R$ 30196.16**
+Economia Anual Projetada: **R$ 362353.97**
 
 
 ## 📖 Documentação Detalhada
