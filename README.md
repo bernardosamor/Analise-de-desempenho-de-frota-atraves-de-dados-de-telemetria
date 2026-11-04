@@ -1,28 +1,36 @@
 # Analise-de-desempenho-de-frota-atraves-de-dados-de-telemetria
-Projeto feito no Pandas busca listar o Top 10% piores veículos de uma frota em termos de eficiência energética. Busquei a baixa taxa de admissão de ar como fator crítico para queima de combustível, e consequentemente, eficiência de aceleração dos carros. Projeto mostra que a manutenção em dia pode economizar até R$ 326.000,00 ao ano.
+Projeto em Python (Pandas e NumPy) que usa dados de telemetria para listar os 10% de veículos com pior eficiência de aceleração em uma frota de 384 veículos e estimar, em um cenário simulado, a economia de combustível se esses veículos operassem como os demais.
 
-# 🚚 Análise de Telemetria: Eficiência Energética e Manutenção Preventiva
-
-Este projeto utiliza **Python (Pandas)** para diagnosticar ineficiências operacionais em frotas veiculares, focando na identificação do **Top 10% de veículos com pior desempenho**. Através do cruzamento de dados de sensores de motor, o estudo demonstra como a manutenção baseada em dados pode gerar economias significativas.
+Resultado em uma linha: os 30 veículos críticos consomem em média ~46% mais combustível em aceleração, concentram 35% do consumo em excesso da frota, e levá-los ao consumo médio dos demais representa uma economia projetada de ~R$ 234 mil por ano.
 
 ---
 
 ### 💡 O Problema de Negócio
-Foi relatado que certos veículos dentro da frota precisavam abastecer com maior frequência que a média, criando um custo adicional que não havia precedentes nos outros veículos. Os dados de telemetria expoem o comportamento de todos veículos da frota, sendo uma ótima fonte de pesquisa de anomalias.
+Veículos de uma frota podem consumir mais combustível que a média sem que isso apareça em nenhum relatório. Os dados de telemetria registram o comportamento de todos os veículos e permitem comparar um veículo com os demais para decidir quais inspecionar primeiro.
 
 ---
 
 ### 🧠 Hipóteses que guiaram esse projeto
-* **Considerando que o problema está na frequência de abastecimento, o problema está no desempenho do carro ou na forma como é manuseado pelo motorista?**
-  * ** Resultado: ✅ Confirmado** Veículos com baixa eficiência de queima de combustível apresentaram baixa taxa de MAF (admissao de g de ar/segundo), o que implica que há um baixo aproveitamento de ar na queima de combustível, dificultando na aceleração.
-* **Se a admissão de ar é insuficiente, é provavel que a eficiência de aceleração esteja baixa, aumentando o consumo de combustível**
-  * ** Resultado: ✅ Confirmado** Sim, veículos com menor taxa de admissão de ar consumiram em média, 18% a mais de combustível.
-* **Se há um problema estrutural de desempenho, a manutenção preventina destes veículos deve ser prioridade**
-  * ** Resultado:✅ Confirmado** Operar o carro nestas condições pode levar a um custo adicional de R$326.000,00 ao ano se comparado com veículos fora do 10% piores.
-
+* **Existem veículos que se destacam dos demais em eficiência de aceleração?**
+  * ** Resultado: ✅ Confirmado** Dos 299 veículos analisados, os 30 piores (10%) têm eficiência média de 2,06, contra 4,01 dos demais: cerca de 1,9x pior.
+* **Esses veículos consomem mais combustível?**
+  * ** Resultado: ✅ Confirmado** Em regime de aceleração, consomem em média 45,7% mais combustível que os demais e concentram 35% do consumo acima da média saudável de toda a frota.
+* **A causa é baixa admissão de ar? Não se sustentou.**
+  * ** Resultado: ❌ Negativo** A hipótese inicial era que o problema estivesse em uma baixa taxa de admissão de ar. Os dados mostram o contrário: os veículos críticos admitem mais ar (e, portanto, queimam mais combustível) para ganhar menos velocidade. A métrica identifica quais veículos são ineficientes, mas não diz por quê. Descobrir a causa exige inspeção.
 
 ## 📈 Impacto de Negócio
- **Insight Crítico:** A regularização da frota identificada como ineficiente projeta uma economia anual de **R$ 326.000,00**, otimizando o EBITDA da operação logística.
+
+📈 Impacto financeiro (cenário simulado)
+
+Se os 30 veículos críticos passassem a operar como os demais:
+
+Critério	Economia por ano	Economia por mês
+Consumo (principal): usa a diferença de consumo medida (+45,7%)	R$ 233.773,34	R$ 19.481,11
+Eficiência (teto do cenário): usa a razão de eficiência (1,9x)	R$ 362.353,97	R$ 30.196,16
+
+O critério de consumo é o principal porque está ligado ao combustível medido. O critério de eficiência é o limite superior do cenário.
+
+Premissas: 22 dias úteis por mês, 8 horas por dia, 30% do tempo em aceleração, gasolina a R$ 5,89 por litro, razão ar-combustível de 14,7 e densidade de 740 g/L.
 
 ---
 
@@ -44,6 +52,25 @@ Criação de métricas de desempenho e amostragem global da base de dados:
 
 
 ## 💡 Insights Principais
+
+Indicador	Valor
+Veículos na frota	384
+Veículos analisados (em aceleração)	299
+Veículos críticos (10% piores)	30
+Eficiência média: saudáveis vs críticos	4,01 vs 2,06 (~1,9x)
+Consumo dos críticos vs saudáveis	+45,7%
+Parcela do consumo em excesso nos críticos	35%
+Economia anual projetada (critério de consumo)	R$ 233.773,34
+Economia anual projetada (critério de eficiência, teto)	R$ 362.353,97
+
+
+## ⚠️ Limitações
+É uma triagem, não um diagnóstico. Eficiência baixa pode refletir tipo de veículo, carga ou rota, e não necessariamente defeito.
+A economia é um cenário simulado. Assume que os veículos críticos chegariam ao desempenho médio dos demais, e parte das premissas (30% do tempo em aceleração, jornada, preço do combustível) é fixa.
+A razão ar-combustível de 14,7 vale para gasolina. Para outros combustíveis ou motores híbridos, a conversão para consumo muda.
+Base de dados: [NOME DA BASE E LINK]. Não é uma frota brasileira, e o preço em reais é uma premissa do cenário.
+
+
 - **Gargalo Técnico:** Veículos com baixa admissão de ar consomem, em média, **18% mais combustível** para manter a mesma performance.
 - **Eficiência de Foco:** Realizar a manutenção, e consequentemente, normalizar o consumo dos Top 10% dos piores veículos resolve **60% do desperdício total** da frota.
 - **ROI de Manutenção:** A estratégia preditiva baseada em dados mostrou-se **4x mais barata** que a manutenção reativa convencional.
@@ -60,6 +87,22 @@ ESTIMATIVA DE ECONOMIA MENSAL
 Premissa: 22 dias úteis, 8h/dia, 30.0% em aceleração.
 Economia Mensal Estimada para a Frota: **R$ 30196.16**
 Economia Anual Projetada: **R$ 362353.97**
+
+
+▶️ Como executar
+bash
+pip install pandas numpy
+python telemetria_frota.py vehicle_data.csv
+
+O arquivo telemetria_frota.py concentra as premissas no bloco de configuração do início, e o resultado completo aparece no terminal.
+
+📖 Documentação detalhada
+
+Passo a passo técnico e lógica estatística no artigo do Medium:
+
+👉 Leia o artigo no Medium
+
+Analista: Bernardo Samôr
 
 
 ## 📖 Documentação Detalhada
