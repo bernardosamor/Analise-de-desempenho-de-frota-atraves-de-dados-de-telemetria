@@ -15,7 +15,7 @@ Veículos de uma frota podem consumir mais combustível que a média sem que iss
   * ** Resultado: ✅ Confirmado** Dos 299 veículos analisados, os 30 piores (10%) têm eficiência média de 2,06, contra 4,01 dos demais: cerca de 1,9x pior.
 * **Esses veículos consomem mais combustível?**
   * ** Resultado: ✅ Confirmado** Em regime de aceleração, consomem em média 45,7% mais combustível que os demais e concentram 35% do consumo acima da média saudável de toda a frota.
-* **A causa é baixa admissão de ar? Não se sustentou.**
+* **A causa é baixa admissão de ar?**
   * ** Resultado: ❌ Negativo** A hipótese inicial era que o problema estivesse em uma baixa taxa de admissão de ar. Os dados mostram o contrário: os veículos críticos admitem mais ar (e, portanto, queimam mais combustível) para ganhar menos velocidade. A métrica identifica quais veículos são ineficientes, mas não diz por quê. Descobrir a causa exige inspeção.
 
 ## 📈 Impacto de Negócio
